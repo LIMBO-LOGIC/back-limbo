@@ -4,24 +4,31 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
+import { RankingQuiz } from './RankingQuiz';
+import { FavoriteProduct } from './FavoriteProduct';
+import { ProductRescue } from './ProductRescue';
 
 @Entity('users')
 export class User {
-  @PrimaryGeneratedColumn('uuid')
-  id!: string;
+  @PrimaryGeneratedColumn()
+  id!: number;
 
-  @Column({ length: 100 })
+  @Column({ type: 'varchar', length: 100 })
   fullname!: string;
 
-  @Column({ unique: true, length: 50 })
+  @Column({ unique: true, type: 'varchar', length: 50 })
   nickname!: string;
 
-  @Column({ unique: true, length: 100 })
+  @Column({ unique: true, type: 'varchar', length: 255 })
   email!: string;
 
-  @Column({ length: 255 })
+  @Column({ type: 'varchar', length: 255 })
   password!: string;
+
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  registration_date!: Date;
 
   @Column('date')
   birthdate!: Date;
@@ -34,6 +41,15 @@ export class User {
 
   @Column('bigint')
   current_points!: number;
+
+  @OneToMany(() => RankingQuiz, (rankingQuiz) => rankingQuiz.user)
+  rankings!: RankingQuiz[]; // Relacionamento inverso
+
+  @OneToMany(() => FavoriteProduct, (favoriteProduct) => favoriteProduct.user)
+  favoriteProducts!: FavoriteProduct[]; // Relacionamento inverso, opcional para carregar os favoritos
+
+  @OneToMany(() => ProductRescue, (productRescue) => productRescue.user)
+  productRescue!: ProductRescue[];
 
   @CreateDateColumn()
   created_at!: Date;
