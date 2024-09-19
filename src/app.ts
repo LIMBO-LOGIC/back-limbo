@@ -8,6 +8,10 @@ app.use(express.json());
 
 router(app);
 
+app.get('/', (req, res) => {
+  res.send('API is running!');
+});
+
 AppDataSource.initialize()
   .then(() => {
     console.log('Database connected successfully');
