@@ -28,4 +28,5 @@ export const AppDataSource = new DataSource({
     Question,
     Answer,
   ],
+  ssl: { rejectUnauthorized: false },
 });
