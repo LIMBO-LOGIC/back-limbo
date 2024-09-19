@@ -1,18 +1,13 @@
 import 'reflect-metadata';
 import express, { Application } from 'express';
 import { AppDataSource } from './config/database';
+import router from './routes';
 
 const app: Application = express();
-
-// Middlewares
 app.use(express.json());
 
-// Routes
-app.get('/', (req, res) => {
-  res.send('API is running');
-});
+router(app);
 
-// Initialize the database
 AppDataSource.initialize()
   .then(() => {
     console.log('Database connected successfully');
