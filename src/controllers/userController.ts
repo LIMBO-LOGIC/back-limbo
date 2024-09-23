@@ -54,6 +54,7 @@ export class UserController {
   }
 
   // POST: Login de usuário
+
   async login(req: Request, res: Response): Promise<Response> {
     try {
       const { nickname, password } = req.body;
@@ -64,17 +65,24 @@ export class UserController {
           .json({ error: 'Nickname and password are required' });
       }
 
+      if (nickname.length < 3) {
+        return res.status(400).json({
+          error:
+            'Nickname must be at least 3 characters and password must be at least 6 characters',
+        });
+      }
+
       const user = await this.userService.loginUser(nickname, password);
 
       if (!user) {
-        return res.status(401).json({ error: 'Invalid credentials' });
+        return res.status(401).json({ error: 'Invalid nickname or password' });
       }
 
       return res.status(200).json({ message: 'Login successful', user });
     } catch (error) {
-      return res
-        .status(500)
-        .json({ message: 'Login failed', error: (error as Error).message });
+      return res.status(500).json({
+        message: 'An unexpected error occurred. Please try again later.',
+      });
     }
   }
 

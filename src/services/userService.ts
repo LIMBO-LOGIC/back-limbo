@@ -70,7 +70,7 @@ export class UserService {
     const user = await this.userRepository.findOne({ where: { nickname } });
 
     if (!user || !comparePasswords(user.password, password)) {
-      throw new Error('Invalid credentials');
+      return null;
     }
 
     return user;
@@ -105,10 +105,10 @@ export class UserService {
   async getUsersByPoints(): Promise<User[]> {
     return this.userRepository.find({
       where: {
-        all_points: MoreThan(0), 
+        all_points: MoreThan(0),
       },
       order: {
-        all_points: 'DESC', 
+        all_points: 'DESC',
       },
     });
   }
