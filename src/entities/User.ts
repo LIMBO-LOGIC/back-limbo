@@ -9,6 +9,7 @@ import {
 import { RankingQuiz } from './RankingQuiz';
 import { FavoriteProduct } from './FavoriteProduct';
 import { ProductRescue } from './ProductRescue';
+import { RacingBet } from './RacingBet';
 
 @Entity('users')
 export class User {
@@ -42,6 +43,9 @@ export class User {
   @Column('bigint')
   current_points!: number;
 
+  @Column({ type: 'varchar', length: 255, nullable: false })
+  profile_picture!: string;
+
   @OneToMany(() => RankingQuiz, (rankingQuiz) => rankingQuiz.user)
   rankings!: RankingQuiz[]; // Relacionamento inverso
 
@@ -50,6 +54,9 @@ export class User {
 
   @OneToMany(() => ProductRescue, (productRescue) => productRescue.user)
   productRescue!: ProductRescue[];
+
+  @OneToMany(() => RacingBet, (racingBet) => racingBet.user)
+  racingBets!: RacingBet[];
 
   @CreateDateColumn()
   created_at!: Date;
