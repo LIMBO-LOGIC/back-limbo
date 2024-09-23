@@ -7,6 +7,8 @@ import { ProductRescue } from '../entities/ProductRescue';
 import { Product } from '../entities/Product';
 import { Question } from '../entities/Question';
 import { Answer } from '../entities/Answer';
+import { Racing } from '../entities/Racing';
+import { RacingBet } from '../entities/RacingBet';
 
 dotenv.config();
 
@@ -17,7 +19,7 @@ export const AppDataSource = new DataSource({
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  synchronize: true, // Descomente para sincronizar as tabelas
+  // synchronize: true,
   logging: false,
   entities: [
     User,
@@ -27,6 +29,8 @@ export const AppDataSource = new DataSource({
     Product,
     Question,
     Answer,
+    Racing,
+    RacingBet,
   ],
   ssl: { rejectUnauthorized: false },
 });

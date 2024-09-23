@@ -6,7 +6,7 @@ export class Racing {
   @PrimaryGeneratedColumn()
   id_racing!: number;
 
-  @Column({ type: 'datetime', unique: true })
+  @Column({ type: 'timestamp', unique: true })
   race_date!: Date;
 
   @Column({ type: 'varchar', length: 255 })
