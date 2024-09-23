@@ -7,11 +7,11 @@ import router from './routes';
 const app: Application = express();
 
 const corsOptions = {
-  origin: ['*'],
+  origin: '*',
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   exposedHeaders: ['Content-Length', 'X-Kuma-Revision'],
-  credentials: true, //
+  credentials: true, 
 };
 
 app.use(cors(corsOptions));
