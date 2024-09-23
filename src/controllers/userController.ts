@@ -1,4 +1,3 @@
-// src/controllers/userController.ts
 import { Request, Response } from 'express';
 import { UserService } from '../services/userService';
 
@@ -14,47 +13,47 @@ export class UserController {
     this.userService = new UserService();
   }
 
+  // POST: Registrar usuário
   async register(req: Request, res: Response): Promise<Response> {
     try {
-      console.log('req.body:', req.body);
       const {
-        fullname = '',
-        nickname = '',
-        email = '',
-        birthdate = '',
-        password = '',
+        fullname,
+        nickname,
+        email,
+        birthdate,
+        password,
+        profile_picture,
       } = req.body;
 
-      // Valida os dados recebidos
       if (!fullname || !nickname || !email || !birthdate || !password) {
         return res.status(400).json({ error: 'Missing required fields' });
       }
 
       const birthdateFormatted = parseDate(birthdate);
-
       const user = await this.userService.createUser(
         fullname,
         nickname,
         email,
         birthdateFormatted,
-        password
+        password,
+        profile_picture
       );
 
       return res
         .status(201)
-        .json({ message: 'Usúario criado com sucesso!', user });
+        .json({ message: 'User created successfully!', user });
     } catch (error) {
-      console.error('Error registering user:', (error as Error).message);
       return res.status(500).json({
-        message: 'Erro ao registrar usuário!',
+        message: 'Error registering user!',
         error: (error as Error).message,
       });
     }
   }
 
+  // POST: Login de usuário
   async login(req: Request, res: Response): Promise<Response> {
     try {
-      const { nickname = '', password = '' } = req.body;
+      const { nickname, password } = req.body;
 
       if (!nickname || !password) {
         return res
@@ -70,26 +69,67 @@ export class UserController {
 
       return res.status(200).json({ message: 'Login successful', user });
     } catch (error) {
-      console.error('Error logging in:', (error as Error).message);
       return res
         .status(500)
         .json({ message: 'Login failed', error: (error as Error).message });
     }
   }
 
-  getUser = async (req: Request, res: Response) => {
+  // GET: Buscar usuário por ID
+  async getUser(req: Request, res: Response): Promise<Response> {
     try {
-      const userId = req.params.id;
+      const userId = Number(req.params.id);
       const user = await this.userService.getUserById(userId);
 
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
       }
 
-      res.json(user);
+      return res.json(user);
     } catch (error) {
-      console.error('Error fetching user:', error);
-      res.status(500).json({ message: 'Error fetching user by id' });
+      return res.status(500).json({ message: 'Error fetching user by id' });
     }
-  };
+  }
+
+  // PUT: Atualizar usuário
+  async updateUser(req: Request, res: Response): Promise<Response> {
+    try {
+      const userId = Number(req.params.id);
+      const userData = req.body;
+      const updatedUser = await this.userService.updateUser(userId, userData);
+
+      if (!updatedUser) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+
+      return res.json({ message: 'User updated successfully', updatedUser });
+    } catch (error) {
+      return res.status(500).json({
+        message: 'Error updating user',
+        error: (error as Error).message,
+      });
+    }
+  }
+
+  // DELETE: Desativar usuário (troca `active` para false)
+  async deactivateUser(req: Request, res: Response): Promise<Response> {
+    try {
+      const userId = Number(req.params.id);
+      const deactivatedUser = await this.userService.deactivateUser(userId);
+
+      if (!deactivatedUser) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+
+      return res.json({
+        message: 'User deactivated successfully',
+        deactivatedUser,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        message: 'Error deactivating user',
+        error: (error as Error).message,
+      });
+    }
+  }
 }

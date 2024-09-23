@@ -4,8 +4,10 @@ import { UserController } from '../controllers/userController';
 const router = Router();
 const userController = new UserController();
 
-router.post('/register', (req, res) => userController.register(req, res));
-router.post('/login', (req, res) => userController.login(req, res));
-// router.get('/:id', getUser);
+router.post('/register', userController.register.bind(userController));
+router.post('/login', userController.login.bind(userController));
+router.get('/:id', userController.getUser.bind(userController));
+router.put('/:id', userController.updateUser.bind(userController));
+router.delete('/:id', userController.deactivateUser.bind(userController));
 
 export default router;
