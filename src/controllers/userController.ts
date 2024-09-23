@@ -25,7 +25,10 @@ export class UserController {
         profile_picture,
       } = req.body;
 
+      console.log(req.body); // Log do corpo da requisição
+
       if (!fullname || !nickname || !email || !birthdate || !password) {
+        console.log({ fullname, nickname, email, birthdate, password }); // Log dos campos
         return res.status(400).json({ error: 'Missing required fields' });
       }
 

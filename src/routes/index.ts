@@ -7,7 +7,6 @@ const router = (app: express.Application) => {
     res.send('API Limbo is running!');
   });
 
-  app.use(express.json());
   app.use(userRouter);
   app.use(productRescue);
 };
