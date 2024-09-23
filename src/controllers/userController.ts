@@ -67,8 +67,7 @@ export class UserController {
 
       if (nickname.length < 3) {
         return res.status(400).json({
-          error:
-            'Nickname must be at least 3 characters and password must be at least 6 characters',
+          error: 'Nickname must be at least 3 characters',
         });
       }
 
