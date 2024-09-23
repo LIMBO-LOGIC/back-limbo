@@ -5,8 +5,6 @@ import { RankingQuiz } from '../entities/RankingQuiz';
 import { FavoriteProduct } from '../entities/FavoriteProduct';
 import { ProductRescue } from '../entities/ProductRescue';
 import { Product } from '../entities/Product';
-import { Question } from '../entities/Question';
-import { Answer } from '../entities/Answer';
 import { Racing } from '../entities/Racing';
 import { RacingBet } from '../entities/RacingBet';
 
@@ -27,8 +25,6 @@ export const AppDataSource = new DataSource({
     FavoriteProduct,
     ProductRescue,
     Product,
-    Question,
-    Answer,
     Racing,
     RacingBet,
   ],
