@@ -1,8 +1,15 @@
 import express from 'express';
 import userRouter from './userRoutes';
+import productRescue from './productRescueRoutes';
 
-const router = (app: express.Router) => {
-  app.use('/user', userRouter);
+const router = (app: express.Application) => {
+  app.route('/').get((req, res) => {
+    res.send('API Limbo is running!');
+  });
+
+  app.use(express.json());
+  app.use(userRouter);
+  app.use(productRescue);
 };
 
 export default router;
