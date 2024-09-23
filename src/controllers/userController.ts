@@ -135,4 +135,21 @@ export class UserController {
       });
     }
   }
+
+  async getUsersByPoints(req: Request, res: Response): Promise<Response> {
+    try {
+      const users = await this.userService.getUsersByPoints();
+
+      if (users.length === 0) {
+        return res.status(404).json({ message: 'No users with points found' });
+      }
+
+      return res.status(200).json(users);
+    } catch (error) {
+      return res.status(500).json({
+        message: 'Error fetching users by points',
+        error: (error as Error).message,
+      });
+    }
+  }
 }

@@ -1,6 +1,6 @@
 import { User } from '../entities/User';
 import { AppDataSource } from '../config/database';
-import { Repository } from 'typeorm';
+import { MoreThan, Repository } from 'typeorm';
 import { randomBytes, scryptSync, timingSafeEqual } from 'crypto';
 
 function keyHash(key: string, salt?: string): string {
@@ -99,5 +99,17 @@ export class UserService {
 
     user.active = false;
     return this.userRepository.save(user);
+  }
+
+  // Dentro do UserService
+  async getUsersByPoints(): Promise<User[]> {
+    return this.userRepository.find({
+      where: {
+        all_points: MoreThan(0), 
+      },
+      order: {
+        all_points: 'DESC', 
+      },
+    });
   }
 }
