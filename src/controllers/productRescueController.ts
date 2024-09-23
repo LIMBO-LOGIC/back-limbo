@@ -9,11 +9,16 @@ export class ProductRescueController {
   }
 
   // GET: Buscar produtos resgatados por ID de usuário
+  // GET: Buscar produtos resgatados por ID de usuário
   async getRescuedProductsByUser(
     req: Request,
     res: Response
   ): Promise<Response> {
-    const userId = parseInt(req.params.userId, 10);
+    const userId = parseInt(req.params.userId ?? '', 10);
+
+    if (isNaN(userId)) {
+      return res.status(400).json({ message: 'Invalid or missing userId' });
+    }
 
     try {
       const products = await this.productRescueService.getRescuedProductsByUser(

@@ -3,7 +3,7 @@ import { UserService } from '../services/userService';
 
 function parseDate(dateString: string): Date {
   const [day, month, year] = dateString.split('/').map(Number);
-  return new Date(year, month - 1, day); // Mês começa do zero
+  return new Date(year ?? 0, (month ?? 0) - 1, day); // Mês começa do zero
 }
 
 export class UserController {
@@ -136,7 +136,7 @@ export class UserController {
     }
   }
 
-  async getUsersByPoints(req: Request, res: Response): Promise<Response> {
+  async getUsersByPoints(_req: Request, res: Response): Promise<Response> {
     try {
       const users = await this.userService.getUsersByPoints();
 

@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, ManyToOne, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { Racing } from './Racing';
 import { User } from './User';
 

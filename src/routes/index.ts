@@ -3,7 +3,7 @@ import userRouter from './userRoutes';
 import productRescue from './productRescueRoutes';
 
 const router = (app: express.Application) => {
-  app.route('/').get((req, res) => {
+  app.route('/').get((_app, res) => {
     res.send('API Limbo is running!');
   });
 

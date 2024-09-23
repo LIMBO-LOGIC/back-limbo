@@ -1,17 +1,24 @@
 {
-    "compilerOptions": {
-      "target": "ES6",
-      "module": "commonjs",
-      "strict": true,
-      "esModuleInterop": true,
-      "skipLibCheck": true,
-      "forceConsistentCasingInFileNames": true,
-      "experimentalDecorators": true,
-      "emitDecoratorMetadata": true,
-      "outDir": "./dist",
-      "rootDir": "./src"
-    },
-    "include": ["src/**/*.ts"],
-    "exclude": ["node_modules"]
-  }
-  
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": false, // Não ignore verificações de bibliotecas
+    "forceConsistentCasingInFileNames": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "noImplicitAny": true, // Proíbe o uso de tipos `any` implícitos
+    "noUnusedLocals": true, // Marca variáveis não utilizadas
+    "noUnusedParameters": true, // Marca parâmetros não utilizados
+    "noImplicitReturns": true, // Garante que todas as funções retornem algo ou nada
+    "noFallthroughCasesInSwitch": true, // Evita quedas acidentais em casos `switch`
+    "noUncheckedIndexedAccess": true, // Acessos de índice de array/object mais rigorosos
+    "strictNullChecks": true, // Obriga a verificação de `null` e `undefined`
+    "noImplicitThis": true // Erro em uso implícito de `this`
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
+}
