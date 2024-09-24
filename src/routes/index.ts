@@ -4,6 +4,7 @@ import productRescueRoutes from './productRescueRoutes';
 import productRoutes from './productRoutes';
 import racingRoutes from './racingRoutes';
 import racingBetRoutes from './racingBetRoutes';
+import favoriteProductRoutes from './favoriteProductsRoutes';
 
 const router = (app: express.Application) => {
   app.route('/').get((_req, res) => {
@@ -16,6 +17,7 @@ const router = (app: express.Application) => {
     productRoutes,
     racingRoutes,
     racingBetRoutes,
+    favoriteProductRoutes,
   ]);
 };
 
