@@ -10,4 +10,10 @@ router.get(
   productRescueController.getRescuedProductsByUser.bind(productRescueController)
 );
 
+// POST: Criar um novo resgate de produto
+router.post(
+  '/product-rescues',
+  productRescueController.createRescuedProduct.bind(productRescueController)
+);
+
 export default router;

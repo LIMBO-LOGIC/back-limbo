@@ -9,7 +9,6 @@ export class ProductRescueController {
   }
 
   // GET: Buscar produtos resgatados por ID de usuário
-  // GET: Buscar produtos resgatados por ID de usuário
   async getRescuedProductsByUser(
     req: Request,
     res: Response
@@ -17,7 +16,9 @@ export class ProductRescueController {
     const userId = parseInt(req.params.userId ?? '', 10);
 
     if (isNaN(userId)) {
-      return res.status(400).json({ message: 'Invalid or missing userId' });
+      return res
+        .status(400)
+        .json({ message: 'ID de usuário inválido ou ausente' });
     }
 
     try {
@@ -27,7 +28,29 @@ export class ProductRescueController {
       return res.json(products);
     } catch (error) {
       return res.status(500).json({
-        message: 'Error fetching rescued products',
+        message: 'Erro ao buscar produtos resgatados',
+        error: (error as Error).message,
+      });
+    }
+  }
+
+  // POST: Criar um novo resgate de produto
+  async createRescuedProduct(req: Request, res: Response): Promise<Response> {
+    const { userId, productId } = req.body;
+
+    if (!userId || !productId) {
+      return res
+        .status(400)
+        .json({ message: 'userId e productId são obrigatórios' });
+    }
+
+    try {
+      const rescuedProduct =
+        await this.productRescueService.createRescuedProduct(userId, productId);
+      return res.status(201).json(rescuedProduct);
+    } catch (error) {
+      return res.status(500).json({
+        message: 'Erro ao criar resgate de produto',
         error: (error as Error).message,
       });
     }

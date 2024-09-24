@@ -1,7 +1,6 @@
 import { DataSource } from 'typeorm';
 import dotenv from 'dotenv';
 import { User } from '../entities/User';
-import { RankingQuiz } from '../entities/RankingQuiz';
 import { FavoriteProduct } from '../entities/FavoriteProduct';
 import { ProductRescue } from '../entities/ProductRescue';
 import { Product } from '../entities/Product';
@@ -21,7 +20,6 @@ export const AppDataSource = new DataSource({
   logging: false,
   entities: [
     User,
-    RankingQuiz,
     FavoriteProduct,
     ProductRescue,
     Product,

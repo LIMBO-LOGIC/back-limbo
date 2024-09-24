@@ -6,7 +6,6 @@ import {
   UpdateDateColumn,
   OneToMany,
 } from 'typeorm';
-import { RankingQuiz } from './RankingQuiz';
 import { FavoriteProduct } from './FavoriteProduct';
 import { ProductRescue } from './ProductRescue';
 import { RacingBet } from './RacingBet';
@@ -45,9 +44,6 @@ export class User {
 
   @Column({ type: 'varchar', length: 255, nullable: false })
   profile_picture!: string;
-
-  @OneToMany(() => RankingQuiz, (rankingQuiz) => rankingQuiz.user)
-  rankings!: RankingQuiz[]; // Relacionamento inverso
 
   @OneToMany(() => FavoriteProduct, (favoriteProduct) => favoriteProduct.user)
   favoriteProducts!: FavoriteProduct[]; // Relacionamento inverso, opcional para carregar os favoritos
