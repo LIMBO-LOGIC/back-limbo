@@ -16,4 +16,9 @@ router.post(
   productRescueController.createRescuedProduct.bind(productRescueController)
 );
 
+router.delete(
+  '/product-rescues/:id',
+  productRescueController.deleteRescuedProduct.bind(productRescueController)
+);
+
 export default router;

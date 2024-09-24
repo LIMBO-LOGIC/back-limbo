@@ -15,14 +15,6 @@ export class ProductRescueService {
     this.productRepository = AppDataSource.getRepository(Product);
   }
 
-  // Buscar produtos resgatados por ID de usuário
-  async getRescuedProductsByUser(userId: number) {
-    return await this.productRescueRepository.find({
-      where: { user: { id: userId } },
-      relations: ['product'], // Para trazer os detalhes do produto relacionado
-    });
-  }
-
   // Criar uma nova relação entre usuário e produto resgatado
   async createRescuedProduct(userId: number, productId: number) {
     const user = await this.userRepository.findOneBy({ id: userId });
@@ -42,5 +34,25 @@ export class ProductRescueService {
     });
 
     return await this.productRescueRepository.save(productRescue);
+  }
+
+  // Buscar produtos resgatados por ID de usuário
+  async getRescuedProductsByUser(userId: number) {
+    return await this.productRescueRepository.find({
+      where: { user: { id: userId } },
+      relations: ['product'], // Para trazer os detalhes do produto relacionado
+    });
+  }
+
+  async deleteRescuedProduct(productRescueId: number): Promise<void> {
+    const productRescue = await this.productRescueRepository.findOneBy({
+      id: productRescueId,
+    });
+
+    if (!productRescue) {
+      throw new Error('ProductRescue not found');
+    }
+
+    await this.productRescueRepository.remove(productRescue);
   }
 }

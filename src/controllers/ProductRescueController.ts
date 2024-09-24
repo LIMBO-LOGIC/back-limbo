@@ -8,6 +8,28 @@ export class ProductRescueController {
     this.productRescueService = new ProductRescueService();
   }
 
+  // POST: Criar um novo resgate de produto
+  async createRescuedProduct(req: Request, res: Response): Promise<Response> {
+    const { userId, productId } = req.body;
+
+    if (!userId || !productId) {
+      return res
+        .status(400)
+        .json({ message: 'userId e productId são obrigatórios' });
+    }
+
+    try {
+      const rescuedProduct =
+        await this.productRescueService.createRescuedProduct(userId, productId);
+      return res.status(201).json(rescuedProduct);
+    } catch (error) {
+      return res.status(500).json({
+        message: 'Erro ao criar resgate de produto',
+        error: (error as Error).message,
+      });
+    }
+  }
+
   // GET: Buscar produtos resgatados por ID de usuário
   async getRescuedProductsByUser(
     req: Request,
@@ -34,24 +56,15 @@ export class ProductRescueController {
     }
   }
 
-  // POST: Criar um novo resgate de produto
-  async createRescuedProduct(req: Request, res: Response): Promise<Response> {
-    const { userId, productId } = req.body;
-
-    if (!userId || !productId) {
-      return res
-        .status(400)
-        .json({ message: 'userId e productId são obrigatórios' });
-    }
-
+  async deleteRescuedProduct(req: Request, res: Response): Promise<Response> {
     try {
-      const rescuedProduct =
-        await this.productRescueService.createRescuedProduct(userId, productId);
-      return res.status(201).json(rescuedProduct);
-    } catch (error) {
+      const { id } = req.params;
+      await this.productRescueService.deleteRescuedProduct(Number(id));
+      return res.status(204).send('Success');
+    } catch (err) {
       return res.status(500).json({
-        message: 'Erro ao criar resgate de produto',
-        error: (error as Error).message,
+        message: 'Erro ao deletar resgate de produto',
+        error: (err as Error).message,
       });
     }
   }
