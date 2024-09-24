@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { UserService } from '../services/userService';
+import { UserService } from '../services/UserService';
 
 function parseDate(dateString: string): Date {
   const [day, month, year] = dateString.split('/').map(Number);

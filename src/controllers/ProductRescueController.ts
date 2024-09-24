@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { ProductRescueService } from '../services/productRescueService';
+import { ProductRescueService } from '../services/ProductRescueService';
 
 export class ProductRescueController {
   private productRescueService: ProductRescueService;

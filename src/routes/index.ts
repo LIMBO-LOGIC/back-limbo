@@ -1,14 +1,14 @@
 import express from 'express';
-import userRouter from './userRoutes';
-import productRescue from './productRescueRoutes';
+import userRoutes from './userRoutes';
+import productRescueRoutes from './productRescueRoutes';
+import productRoutes from './productRoutes';
 
 const router = (app: express.Application) => {
-  app.route('/').get((_app, res) => {
+  app.route('/').get((_req, res) => {
     res.send('API Limbo is running!');
   });
-
-  app.use(userRouter);
-  app.use(productRescue);
+  
+  app.use([userRoutes, productRescueRoutes, productRoutes]);
 };
 
 export default router;

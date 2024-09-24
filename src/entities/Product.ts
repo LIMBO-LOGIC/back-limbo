@@ -10,10 +10,10 @@ export class Product {
   @Column({ type: 'varchar', length: 50 })
   name!: string;
 
-  @Column({ type: 'varchar', length: 50 })
+  @Column({ type: 'varchar', length: 200 })
   description!: string;
 
-  @Column({ type: 'varchar', length: 50 })
+  @Column({ type: 'varchar', length: 200 })
   details!: string;
 
   @Column({ type: 'bigint' })
