@@ -13,6 +13,7 @@ router.get(
 );
 router.get('/users', userController.getAllUser.bind(userController));
 router.put('/user/:id', userController.updateUser.bind(userController));
+router.put('/user/:id/points', userController.updateUserPoints.bind(userController));
 router.delete('/user/:id', userController.deactivateUser.bind(userController));
 
 export default router;

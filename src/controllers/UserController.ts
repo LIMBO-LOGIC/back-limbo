@@ -131,6 +131,42 @@ export class UserController {
     }
   }
 
+  // Método para atualizar os pontos do usuário
+  async updateUserPoints(req: Request, res: Response): Promise<Response> {
+    try {
+      const userId = Number(req.params.id);
+      const { allPoints, currentPoints } = req.body;
+
+      // Validação simples para garantir que os pontos estão presentes
+      if (allPoints === undefined || currentPoints === undefined) {
+        return res.status(400).json({
+          message: 'Missing required fields: allPoints and currentPoints',
+        });
+      }
+
+      // Chama o serviço para atualizar os pontos do usuário
+      const updatedUser = await this.userService.updatePoints(
+        userId,
+        allPoints,
+        currentPoints
+      );
+
+      if (!updatedUser) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+
+      return res.json({
+        message: 'User points updated successfully',
+        updatedUser,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        message: 'Error updating user points',
+        error: (error as Error).message,
+      });
+    }
+  }
+
   // DELETE: Desativar usuário (troca `active` para false)
   async deactivateUser(req: Request, res: Response): Promise<Response> {
     try {

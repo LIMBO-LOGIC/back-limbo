@@ -95,6 +95,23 @@ export class UserService {
     return this.userRepository.save(user);
   }
 
+  async updatePoints(
+    id: number,
+    allPoints: number,
+    currentPoints: number
+  ): Promise<User | null> {
+    const user = await this.userRepository.findOneBy({ id });
+
+    if (!user) {
+      return null;
+    }
+
+    user.all_points = allPoints;
+    user.current_points = currentPoints;
+
+    return this.userRepository.save(user);
+  }
+
   // Desativar usuário (trocar active para false)
   async deactivateUser(id: number): Promise<User | null> {
     const user = await this.userRepository.findOneBy({ id: Number(id) });
