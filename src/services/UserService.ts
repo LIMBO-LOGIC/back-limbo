@@ -76,6 +76,10 @@ export class UserService {
     return user;
   }
 
+  async getAllUser(): Promise<User[]> {
+    return this.userRepository.find();
+  }
+
   // Buscar usuário por ID
   async getUserById(id: number): Promise<User | null> {
     return this.userRepository.findOneBy({ id: Number(id) });

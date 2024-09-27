@@ -85,6 +85,16 @@ export class UserController {
     }
   }
 
+  async getAllUser(_req: Request, res: Response): Promise<Response> {
+    try {
+      const users = await this.userService.getAllUser();
+      return res.json(users);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ message: 'Error fetching all users' });
+    }
+  }
+
   // GET: Buscar usuário por ID
   async getUser(req: Request, res: Response): Promise<Response> {
     try {

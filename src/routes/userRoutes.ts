@@ -11,6 +11,7 @@ router.get(
   '/user/points',
   userController.getUsersByPoints.bind(userController)
 );
+router.get('/users', userController.getAllUser.bind(userController));
 router.put('/user/:id', userController.updateUser.bind(userController));
 router.delete('/user/:id', userController.deactivateUser.bind(userController));
 
