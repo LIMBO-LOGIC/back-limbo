@@ -40,7 +40,9 @@ export class RacingService {
 
   // Listar todas as corridas
   async getAll(): Promise<Racing[]> {
-    return await this.racingRepository.find();
+    return await this.racingRepository.find({order: {
+      race_date: 'ASC'
+    }});
   }
 
   // Obter corrida por ID
