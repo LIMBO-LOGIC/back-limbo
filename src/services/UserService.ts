@@ -122,9 +122,8 @@ export class UserService {
     return this.userRepository.save(user);
   }
 
-  // Dentro do UserService
   async getUsersByPoints(): Promise<User[]> {
-    return this.userRepository.find({
+    const users = await this.userRepository.find({
       where: {
         all_points: MoreThan(0),
       },
@@ -132,5 +131,7 @@ export class UserService {
         all_points: 'DESC',
       },
     });
+    console.log(users); 
+    return users;
   }
 }

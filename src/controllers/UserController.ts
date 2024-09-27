@@ -192,7 +192,7 @@ export class UserController {
   async getUsersByPoints(_req: Request, res: Response): Promise<Response> {
     try {
       const users = await this.userService.getUsersByPoints();
-
+      console.log(users);
       if (users.length === 0) {
         return res.status(404).json({ message: 'No users with points found' });
       }
@@ -201,7 +201,6 @@ export class UserController {
     } catch (error) {
       return res.status(500).json({
         message: 'Error fetching users by points',
-        error: (error as Error).message,
       });
     }
   }
