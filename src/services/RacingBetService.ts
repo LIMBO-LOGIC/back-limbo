@@ -34,6 +34,14 @@ export class RacingBetService {
     });
   }
 
+  // Obter uma aposta por ID do usuário
+  async getByUserId(userId: number): Promise<RacingBet[] | null> {
+    return await this.racingBetRepository.find({
+      where: { user: {id: userId}},
+      relations: ['racing', 'user'],
+    });
+  }
+
   // Atualizar uma aposta
   async update(
     id_racing_bet: number,

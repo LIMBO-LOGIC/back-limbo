@@ -16,6 +16,10 @@ router.get(
   '/racing-bets/:id_racing_bet',
   racingBetController.getById.bind(racingBetController)
 );
+router.get(
+  '/racing-bets/user/:userId',
+  racingBetController.getByUser.bind(racingBetController)
+);
 router.put(
   '/racing-bets/:id_racing_bet',
   racingBetController.update.bind(racingBetController)
