@@ -115,15 +115,42 @@ export class UserController {
   async updateUser(req: Request, res: Response): Promise<Response> {
     try {
       const userId = Number(req.params.id);
-      const userData = req.body;
-      const updatedUser = await this.userService.updateUser(userId, userData);
+      const { fullname, nickname, birthdate } = req.body;
+
+      if (!fullname && !nickname && !birthdate) {
+        return res
+          .status(400)
+          .json({ message: 'At least one field is required to update' });
+      }
+
+      const parsedBirthdate = birthdate ? new Date(birthdate) : undefined;
+
+      const updatedUser = await this.userService.updateUser(userId, {
+        fullname,
+        nickname,
+        birthdate: parsedBirthdate,
+      });
 
       if (!updatedUser) {
         return res.status(404).json({ message: 'User not found' });
       }
 
-      return res.json({ message: 'User updated successfully', updatedUser });
+      // Formata o campo birthdate no formato dd/mm/yyyy
+      const formattedUser = {
+        ...updatedUser,
+        birthdate: updatedUser.birthdate
+          ? new Date(updatedUser.birthdate).toLocaleDateString('pt-BR')
+          : null,
+      };
+
+      return res.json({
+        message: 'User updated successfully',
+        updatedUser: formattedUser,
+      });
     } catch (error) {
+      if ((error as Error).message === 'Nickname already in use') {
+        return res.status(400).json({ message: 'Nickname already in use' });
+      }
       return res.status(500).json({
         message: 'Error updating user',
         error: (error as Error).message,

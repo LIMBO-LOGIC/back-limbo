@@ -87,11 +87,28 @@ export class UserService {
 
   // Atualizar dados do usuário
   async updateUser(id: number, userData: Partial<User>): Promise<User | null> {
+    // Verifica se o usuário existe
     const user = await this.userRepository.findOneBy({ id: Number(id) });
-
     if (!user) return null;
 
-    Object.assign(user, userData);
+    // Verifica se o nickname já está em uso por outro usuário
+    if (userData.nickname) {
+      const existingUserWithSameNickname = await this.userRepository.findOne({
+        where: { nickname: userData.nickname },
+      });
+
+      if (
+        existingUserWithSameNickname &&
+        existingUserWithSameNickname.id !== id
+      ) {
+        throw new Error('Nickname already in use');
+      }
+    }
+
+    // Atualiza somente fullname, nickname e birthdate
+    const { fullname, nickname, birthdate } = userData;
+    Object.assign(user, { fullname, nickname, birthdate });
+
     return this.userRepository.save(user);
   }
 
@@ -131,7 +148,7 @@ export class UserService {
         all_points: 'DESC',
       },
     });
-    console.log(users); 
+    console.log(users);
     return users;
   }
 }
