@@ -10,16 +10,16 @@ export class RacingBetController {
 
   // Criar uma nova aposta
   async create(req: Request, res: Response): Promise<Response> {
-    const { racingId, userId } = req.body;
+    const { racingId, userId, listPilots } = req.body;
 
-    if (!racingId || !userId) {
+    if (!racingId || !userId || !listPilots) {
       return res
         .status(400)
         .json({ message: "ID da corrida e ID do usuário são obrigatórios" });
     }
 
     try {
-      const newRacingBet = await this.racingBetService.create(racingId, userId);
+      const newRacingBet = await this.racingBetService.create(racingId, userId, listPilots);
       return res.status(201).json(newRacingBet);
     } catch (error) {
       return res.status(500).json({
@@ -33,7 +33,6 @@ export class RacingBetController {
   async getAll(_req: Request, res: Response): Promise<Response> {
     try {
       const racingBets = await this.racingBetService.getAll();
-      console.log(racingBets);
       return res.json(racingBets);
     } catch (error) {
       return res.status(500).json({
@@ -90,9 +89,9 @@ export class RacingBetController {
   // Atualizar uma aposta
   async update(req: Request, res: Response): Promise<Response> {
     const id_racing_bet = parseInt(req.params.id_racing_bet!, 10);
-    const { racingId, userId } = req.body;
+    const { racingId, userId, listPilots } = req.body;
 
-    if (isNaN(id_racing_bet) || !racingId || !userId) {
+    if (isNaN(id_racing_bet) || !racingId || !userId || !listPilots) {
       return res
         .status(400)
         .json({ message: "ID inválido ou dados incompletos" });
@@ -102,7 +101,8 @@ export class RacingBetController {
       const updatedRacingBet = await this.racingBetService.update(
         id_racing_bet,
         racingId,
-        userId
+        userId,
+        listPilots
       );
       return res.json(updatedRacingBet);
     } catch (error) {

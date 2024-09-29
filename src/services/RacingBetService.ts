@@ -10,8 +10,9 @@ export class RacingBetService {
   }
 
   // Criar uma nova aposta de corrida
-  async create(racingId: number, userId: number): Promise<RacingBet> {
+  async create(racingId: number, userId: number, listPilots: string): Promise<RacingBet> {
     const racingBet = this.racingBetRepository.create({
+      list_pilots: listPilots,
       racing: { id_racing: racingId },
       user: { id: userId },
     });
@@ -23,7 +24,7 @@ export class RacingBetService {
   async getAll(): Promise<RacingBet[]> {
     return await this.racingBetRepository.find({
       relations: ['racing', 'user'],
-    });
+    }); 
   }
 
   // Obter uma aposta por ID
@@ -46,7 +47,8 @@ export class RacingBetService {
   async update(
     id_racing_bet: number,
     racingId: number,
-    userId: number
+    userId: number,
+    listPilots: string
   ): Promise<RacingBet> {
     const racingBet = await this.getById(id_racing_bet);
     if (!racingBet) {
@@ -55,6 +57,7 @@ export class RacingBetService {
 
     racingBet.racing.id_racing = racingId;
     racingBet.user.id = userId;
+    racingBet.list_pilots = listPilots
 
     return await this.racingBetRepository.save(racingBet);
   }

@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, ManyToOne, Column } from 'typeorm';
 import { Racing } from './Racing';
 import { User } from './User';
 
@@ -6,6 +6,9 @@ import { User } from './User';
 export class RacingBet {
   @PrimaryGeneratedColumn()
   id_racing_bet!: number;
+
+  @Column({ type: 'text', default: ''})
+  list_pilots!: string;
 
   @ManyToOne(() => Racing, (racing) => racing.bets)
   racing!: Racing;
