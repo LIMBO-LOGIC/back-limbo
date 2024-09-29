@@ -19,6 +19,11 @@ router.put(
   '/user/:id/points',
   userController.updateUserPoints.bind(userController)
 );
+router.put(
+  '/user/:id/password',
+  userController.changePassword.bind(userController)
+);
+
 router.delete('/user/:id', userController.deactivateUser.bind(userController));
 
 export default router;

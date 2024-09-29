@@ -115,9 +115,9 @@ export class UserController {
   async updateUser(req: Request, res: Response): Promise<Response> {
     try {
       const userId = Number(req.params.id);
-      const { fullname, nickname, birthdate } = req.body;
+      const { fullname, nickname, birthdate, password } = req.body;
 
-      if (!fullname && !nickname && !birthdate) {
+      if (!fullname && !nickname && !birthdate && !password) {
         return res
           .status(400)
           .json({ message: 'At least one field is required to update' });
@@ -129,6 +129,7 @@ export class UserController {
         fullname,
         nickname,
         birthdate: parsedBirthdate,
+        password,
       });
 
       if (!updatedUser) {
@@ -153,6 +154,39 @@ export class UserController {
       }
       return res.status(500).json({
         message: 'Error updating user',
+        error: (error as Error).message,
+      });
+    }
+  }
+
+  async changePassword(req: Request, res: Response): Promise<Response> {
+    try {
+      const userId = Number(req.params.id);
+      const { oldPassword, newPassword } = req.body;
+
+      if (!oldPassword || !newPassword) {
+        return res
+          .status(400)
+          .json({ message: 'Both old and new passwords are required' });
+      }
+
+      // Chama o serviço para alterar a senha
+      const user = await this.userService.changePassword(
+        userId,
+        oldPassword,
+        newPassword
+      );
+
+      if (!user) {
+        return res
+          .status(401)
+          .json({ message: 'Old password is incorrect or user not found' });
+      }
+
+      return res.status(200).json({ message: 'Password changed successfully' });
+    } catch (error) {
+      return res.status(500).json({
+        message: 'Error changing password',
         error: (error as Error).message,
       });
     }

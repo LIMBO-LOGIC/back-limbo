@@ -112,6 +112,36 @@ export class UserService {
     return this.userRepository.save(user);
   }
 
+  async saveUser(user: User): Promise<User> {
+    return this.userRepository.save(user);
+  }
+
+  async changePassword(
+    id: number,
+    oldPassword: string,
+    newPassword: string
+  ): Promise<User | null> {
+    const user = await this.userRepository.findOneBy({ id: Number(id) });
+
+    if (!user) {
+      return null; // Usuário não encontrado
+    }
+
+    // Verifica se a senha antiga está correta
+    const isOldPasswordCorrect = comparePasswords(user.password, oldPassword);
+    if (!isOldPasswordCorrect) {
+      return null; // Senha antiga incorreta
+    }
+
+    // Gera uma nova senha criptografada
+    const hashedNewPassword = keyHash(newPassword);
+
+    // Atualiza a senha do usuário
+    user.password = hashedNewPassword;
+
+    return this.userRepository.save(user);
+  }
+
   async updatePoints(
     id: number,
     allPoints: number,
