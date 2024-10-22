@@ -30,7 +30,7 @@ export class User {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   registration_date!: Date;
 
-  @Column('date')
+  @Column({type: 'date', nullable: true})
   birthdate!: Date;
 
   @Column('boolean')
