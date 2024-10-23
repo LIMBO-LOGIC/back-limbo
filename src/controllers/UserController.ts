@@ -115,7 +115,7 @@ export class UserController {
   async updateUser(req: Request, res: Response): Promise<Response> {
     try {
       const userId = Number(req.params.id);
-      const { fullname, nickname, birthdate, password } = req.body;
+      const { fullname, nickname, birthdate, password , profile_picture } = req.body;
 
       if (!fullname && !nickname && !birthdate && !password) {
         return res
@@ -130,6 +130,7 @@ export class UserController {
         nickname,
         birthdate: parsedBirthdate,
         password,
+        profile_picture
       });
 
       if (!updatedUser) {

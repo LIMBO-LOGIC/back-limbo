@@ -24,6 +24,9 @@ export class Racing {
   @Column({ type: 'int' })
   round!: number;
 
+  @Column({ type: 'text', default: ''})
+  result_racing!: string;
+
   @OneToMany(() => RacingBet, (racingBet) => racingBet.racing)
   bets!: RacingBet[]; // Relationship with RacingBet
 }
