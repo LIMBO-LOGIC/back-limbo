@@ -40,9 +40,11 @@ export class RacingService {
 
   // Listar todas as corridas
   async getAll(): Promise<Racing[]> {
-    return await this.racingRepository.find({order: {
-      race_date: 'ASC'
-    }});
+    return await this.racingRepository.find({
+      order: {
+        race_date: 'ASC',
+      },
+    });
   }
 
   // Obter corrida por ID
@@ -76,5 +78,22 @@ export class RacingService {
     }
 
     await this.racingRepository.remove(racing);
+  }
+
+  // Retorna a corrida mais próxima
+  async getNearestRace(): Promise<Racing | null> {
+    const currentDate = new Date();
+
+    const nearestRace = await this.racingRepository
+      .createQueryBuilder('racing')
+      .where('racing.race_date >= :currentDate', { currentDate })
+      .orderBy('racing.race_date', 'ASC')
+      .getOne();
+
+    if (!nearestRace) {
+      throw new Error('Nenhuma corrida futura encontrada.');
+    }
+
+    return nearestRace;
   }
 }

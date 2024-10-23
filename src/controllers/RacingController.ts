@@ -72,4 +72,13 @@ export class RacingController {
       return res.status(404).json({ message: (error as Error).message });
     }
   }
+
+  async getNearestRace(_req: Request, res: Response): Promise<Response> {
+    try {
+      const nearestRace = await this.racingService.getNearestRace();
+      return res.status(200).json(nearestRace);
+    } catch (error) {
+      return res.status(404).json({ message: (error as Error).message });
+    }
+  }
 }

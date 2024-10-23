@@ -28,4 +28,10 @@ router.delete(
   racingController.delete.bind(racingController)
 );
 
+// Rota para obter a corrida mais próxima
+router.get(
+  '/racing/nearest',
+  racingController.getNearestRace.bind(racingController)
+);
+
 export default router;
