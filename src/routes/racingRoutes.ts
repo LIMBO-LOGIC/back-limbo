@@ -10,6 +10,12 @@ router.post('/racing', racingController.create.bind(racingController));
 // Rota para listar todas as corridas
 router.get('/racing', racingController.getAll.bind(racingController));
 
+// Rota para obter a corrida mais próxima
+router.get(
+  '/racing/nearest',
+  racingController.getNearestRace.bind(racingController)
+);
+
 // Rota para obter uma corrida por ID
 router.get(
   '/racing/:id_racing',
@@ -26,12 +32,6 @@ router.put(
 router.delete(
   '/racing/:id_racing',
   racingController.delete.bind(racingController)
-);
-
-// Rota para obter a corrida mais próxima
-router.get(
-  '/racing/nearest',
-  racingController.getNearestRace.bind(racingController)
 );
 
 export default router;
