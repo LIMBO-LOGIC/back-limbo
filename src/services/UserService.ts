@@ -1,13 +1,13 @@
-import { User } from "../entities/User";
-import { AppDataSource } from "../config/database";
-import { MoreThan, Repository } from "typeorm";
-import { randomBytes, scryptSync, timingSafeEqual } from "crypto";
+import { User } from '../entities/User';
+import { AppDataSource } from '../config/database';
+import { MoreThan, Repository } from 'typeorm';
+import { randomBytes, scryptSync, timingSafeEqual } from 'crypto';
 
 function keyHash(key: string, salt?: string): string {
   if (!salt) {
-    salt = randomBytes(16).toString("hex");
+    salt = randomBytes(16).toString('hex');
   }
-  const hashKey = scryptSync(key, salt, 64).toString("hex");
+  const hashKey = scryptSync(key, salt, 64).toString('hex');
   return salt + hashKey;
 }
 
@@ -20,8 +20,8 @@ function comparePasswords(
   const hashedSuppliedPassword = keyHash(suppliedPassword, salt).slice(32);
 
   return timingSafeEqual(
-    Buffer.from(hash, "hex"),
-    Buffer.from(hashedSuppliedPassword, "hex")
+    Buffer.from(hash, 'hex'),
+    Buffer.from(hashedSuppliedPassword, 'hex')
   );
 }
 
@@ -46,7 +46,7 @@ export class UserService {
     });
 
     if (existingUser) {
-      throw new Error("Email or nickname already in use");
+      throw new Error('Email or nickname already in use');
     }
 
     const hashedPassword = keyHash(password);
@@ -101,13 +101,13 @@ export class UserService {
         existingUserWithSameNickname &&
         existingUserWithSameNickname.id !== id
       ) {
-        throw new Error("Nickname already in use");
+        throw new Error('Nickname already in use');
       }
     }
 
     if (
       userData.profile_picture != null &&
-      userData.profile_picture != "" &&
+      userData.profile_picture != '' &&
       userData.profile_picture != undefined
     ) {
       // Atualiza somente fullname, nickname e birthdate
@@ -185,10 +185,20 @@ export class UserService {
         all_points: MoreThan(0),
       },
       order: {
-        all_points: "DESC",
+        all_points: 'DESC',
       },
     });
     console.log(users);
     return users;
+  }
+
+  async deleteUser(id: number): Promise<User> {
+    const user = await this.userRepository.findOneBy({ id: Number(id) });
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    return this.userRepository.remove(user);
   }
 }

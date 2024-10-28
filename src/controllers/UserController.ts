@@ -115,7 +115,8 @@ export class UserController {
   async updateUser(req: Request, res: Response): Promise<Response> {
     try {
       const userId = Number(req.params.id);
-      const { fullname, nickname, birthdate, password , profile_picture } = req.body;
+      const { fullname, nickname, birthdate, password, profile_picture } =
+        req.body;
 
       if (!fullname && !nickname && !birthdate && !password) {
         return res
@@ -130,7 +131,7 @@ export class UserController {
         nickname,
         birthdate: parsedBirthdate,
         password,
-        profile_picture
+        profile_picture,
       });
 
       if (!updatedUser) {
@@ -263,6 +264,24 @@ export class UserController {
     } catch (error) {
       return res.status(500).json({
         message: 'Error fetching users by points',
+      });
+    }
+  }
+
+  async deleteUser(req: Request, res: Response): Promise<Response> {
+    try {
+      const userId = Number(req.params.id);
+      const deletedUser = await this.userService.deleteUser(userId);
+
+      if (!deletedUser) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+
+      return res.json({ message: 'User deleted successfully' });
+    } catch (error) {
+      return res.status(500).json({
+        message: 'Error deleting user',
+        error: (error as Error).message,
       });
     }
   }

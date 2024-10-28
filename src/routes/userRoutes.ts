@@ -25,5 +25,9 @@ router.put(
 );
 
 router.delete('/user/:id', userController.deactivateUser.bind(userController));
+router.delete(
+  '/user/delete/:id',
+  userController.deleteUser.bind(userController)
+);
 
 export default router;
