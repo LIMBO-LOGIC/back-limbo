@@ -19,6 +19,9 @@ export class Product {
   @Column({ type: 'bigint' })
   change_points!: number;
 
+  @Column({ type: 'float' })
+  price!: number;
+
   @Column({ type: 'boolean' })
   active!: boolean;
 

@@ -21,6 +21,9 @@ export class User {
   @Column({ unique: true, type: 'varchar', length: 50 })
   nickname!: string;
 
+  @Column({ type: 'varchar', length: 4 })
+  type_user!: string;
+
   @Column({ unique: true, type: 'varchar', length: 255 })
   email!: string;
 

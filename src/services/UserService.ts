@@ -39,6 +39,7 @@ export class UserService {
     email: string,
     birthdate: Date,
     password: string,
+    type_user: string,
     profile_picture: string
   ): Promise<User> {
     const existingUser = await this.userRepository.findOne({
@@ -56,6 +57,7 @@ export class UserService {
       email,
       birthdate,
       password: hashedPassword,
+      type_user,
       profile_picture,
       active: true,
       all_points: 0,

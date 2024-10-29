@@ -22,6 +22,7 @@ export class UserController {
         email,
         birthdate,
         password,
+        type_user,
         profile_picture,
       } = req.body;
 
@@ -39,6 +40,7 @@ export class UserController {
         email,
         birthdateFormatted,
         password,
+        type_user,
         profile_picture
       );
 
