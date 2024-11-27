@@ -11,7 +11,7 @@ router.post('/user/login', userController.login.bind(userController));
 // Rotas de busca específicas e genéricas
 router.get('/user/:id', userController.getUser.bind(userController));
 router.get(
-  '/user/points',
+  '/users/points',
   userController.getUsersByPoints.bind(userController)
 );
 router.get('/users', userController.getAllUser.bind(userController));
